@@ -1,5 +1,5 @@
 var mysql = require('mysql');
-var config = require('../config/config.json');
+var config = require('./config/config.json');
 
 exports.doConnect = function(query) {
   var pool  = mysql.createPool({
@@ -11,10 +11,10 @@ exports.doConnect = function(query) {
 
 
   pool.getConnection(function(err, connection) {
-    connection.query(query, function (error, results, fields) {
+    connection.query('select * from msCourse', function (error, results, fields) {
       connection.release();
       if (error) callback(error);
-      else callback(null,JSON.stringify(results));
+      else callback(null,results);
     });
   });
 };
